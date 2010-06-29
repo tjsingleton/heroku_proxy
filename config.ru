@@ -1,6 +1,10 @@
 require "bundler"
 Bundler.setup
-require 'net/http'
-require 'mime/types'
-require "app"
+
+%w[rack rack/contrib net/http mime/types app].each {|f| require f }
+
+use Rack::Head
+use Rack::Deflater
+use Rack::ETag
+use Rack::ConditionalGet
 run App

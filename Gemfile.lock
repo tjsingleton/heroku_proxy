@@ -1,5 +1,5 @@
 --- 
-hash: 4e88b746e07466535c713d005c319d676129dd2e
+hash: 5bfec2a08127d91e23edd6485c100b39d9de3e85
 sources: 
 - Rubygems: 
     uri: http://rubygems.org
@@ -8,8 +8,14 @@ specs:
     version: "1.16"
 - rack: 
     version: 1.2.1
+- rack-contrib: 
+    version: 1.0.1
 dependencies: 
   rack: 
+    version: ">= 0"
+    group: 
+    - :default
+  rack-contrib: 
     version: ">= 0"
     group: 
     - :default

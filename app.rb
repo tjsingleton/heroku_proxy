@@ -17,16 +17,8 @@ class App
     @response.code == "200"
   end
 
-  def self.body
-    head? ? "" : @response.body
-  end
-
-  def self.head?
-    @env["REQUEST_METHOD"] == "HEAD"
-  end
-
   def self.success
-    [200, {"Content-Type" => mime_type}, [body]]
+    [200, {"Content-Type" => mime_type, 'Cache-Control' => "max-age=#{duration_in_seconds}, public", 'Expires' => duration_in_words}, [@response.body]]
   end
 
   def self.mime_type
@@ -35,5 +27,13 @@ class App
 
   def self.failure
     [404, {"Content-Type" => "text/html"}, ["Not Found"]]
+  end
+
+  def self.duration_in_words
+    (Time.now + self.duration_in_seconds).strftime '%a, %d %b %Y %H:%M:%S GMT'
+  end
+
+  def self.duration_in_seconds
+    60 * 60 * 24 * 365
   end
 end
