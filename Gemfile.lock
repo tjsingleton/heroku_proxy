@@ -1,0 +1,19 @@
+--- 
+hash: 4e88b746e07466535c713d005c319d676129dd2e
+sources: 
+- Rubygems: 
+    uri: http://rubygems.org
+specs: 
+- mime-types: 
+    version: "1.16"
+- rack: 
+    version: 1.2.1
+dependencies: 
+  rack: 
+    version: ">= 0"
+    group: 
+    - :default
+  mime-types: 
+    version: ">= 0"
+    group: 
+    - :default
