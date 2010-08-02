@@ -1,5 +1,5 @@
 class App
-  HOST = "http://s3.amazonaws.com%s"
+  HOST = "http://s3.amazonaws.com/assets.salescrunch.com%s"
 
   def self.call(env)
     @env = env
