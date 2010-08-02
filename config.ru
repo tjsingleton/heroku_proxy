@@ -7,4 +7,4 @@ use Rack::Head
 use Rack::Deflater
 use Rack::ETag
 use Rack::ConditionalGet
-run App
+run App.new("http://tjsingleton.name")

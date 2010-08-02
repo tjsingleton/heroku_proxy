@@ -1,39 +1,41 @@
 class App
-  HOST = "http://s3.amazonaws.com/assets.salescrunch.com%s"
+  def initialize(host)
+    @host = host
+  end
 
-  def self.call(env)
+  def call(env)
     @env = env
     request_file
     file_retrieved? ? success : failure
   end
 
-  def self.request_file
-    url = URI.parse(HOST % @env["PATH_INFO"])
+  def request_file
+    url = URI.parse([@host, @env["PATH_INFO"]].join(""))
     @request = Net::HTTP::Get.new(url.path)
     @response = Net::HTTP.start(url.host, url.port) {|http| http.request(@request) }
   end
 
-  def self.file_retrieved?
+  def file_retrieved?
     @response.code == "200"
   end
 
-  def self.success
+  def success
     [200, {"Content-Type" => mime_type, 'Cache-Control' => "max-age=#{duration_in_seconds}, public", 'Expires' => duration_in_words}, [@response.body]]
   end
 
-  def self.mime_type
+  def mime_type
     MIME::Types.type_for(@env["PATH_INFO"]).first.simplified
   end
 
-  def self.failure
+  def failure
     [404, {"Content-Type" => "text/html"}, ["Not Found"]]
   end
 
-  def self.duration_in_words
-    (Time.now + self.duration_in_seconds).strftime '%a, %d %b %Y %H:%M:%S GMT'
+  def duration_in_words
+    (Time.now + duration_in_seconds).strftime '%a, %d %b %Y %H:%M:%S GMT'
   end
 
-  def self.duration_in_seconds
+  def duration_in_seconds
     60 * 60 * 24 * 365
   end
 end
